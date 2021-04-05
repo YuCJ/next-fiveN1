@@ -11,7 +11,7 @@
   "author": "Peng Jie <im@jiepeng.me> (https://github.com/neighborhood999)",
   "lint-staged": {
     "*.js": [
-      "npm run lint:fix"
+      "eslint --fix"
     ]
   },
   "husky": {
