@@ -5,5 +5,11 @@ module.exports = {
   target: 'serverless',
   env: {
     NEXT_PUBLIC_API_URL
+  },
+  exportPathMap: async function () {
+    return {
+      '/': { page: '/' },
+      '/about': { page: '/about' }
+    };
   }
 };
