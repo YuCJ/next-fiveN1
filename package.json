@@ -7,9 +7,9 @@
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint . --ext=js",
     "lint:fix": "eslint . --ext=js --fix",
-    "export": "rm -rf dist && next export -o dist/",
-    "deploy": "touch dist/.nojekyll && git add dist/ && git commit -m \"chore: update static\"",
-    "release": "git checkout public && git merge master --no-ff --no-edit && yarn build && yarn export && yarn deploy && git push origin"
+    "export": "rm -rf dist && next export -o dist/ && touch .nojekyll && git add dist/ && git commit -m \"chore: update static\"",
+    "deploy": "git push origin",
+    "release": "git checkout gh-pages && git merge master --no-ff --no-edit && yarn build && yarn export && yarn deploy"
   },
   "author": "Peng Jie <im@jiepeng.me> (https://github.com/neighborhood999)",
   "lint-staged": {
