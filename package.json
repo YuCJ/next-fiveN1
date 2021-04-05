@@ -2,12 +2,13 @@
   "name": "next-fiven1",
   "version": "0.0.0",
   "scripts": {
+    "clean": "rm -rf .next dist",
     "dev": "NODE_ENV=development next",
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint . --ext=js",
     "lint:fix": "eslint . --ext=js --fix",
-    "static": "NODE_ENV=production next build && next export -o dist/",
+    "static": "yarn clean && NODE_ENV=production next build && next export -o dist/",
     "release": "git checkout public && git merge master --no-ff --no-edit && yarn static && git add dist && git commit -m \"chore: update static\""
   },
   "author": "Peng Jie <im@jiepeng.me> (https://github.com/neighborhood999)",
