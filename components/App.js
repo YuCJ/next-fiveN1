@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 
 import RentInfoContext from '../contexts/RentInfoContext';
 import { appendParameters, handleResponse } from '../utils';
+import { pickValidRents } from '../utils/filter';
 
 import Form from './Form';
 import RentInfoList from './RentInfoList';
@@ -85,12 +86,12 @@ function App() {
     };
     const url = appendParameters(updateQueryParameters);
     const nextPage = await fetch(url).then(response => response.json());
-    const { hasData, data: rentInfos } = handleResponse(nextPage);
-
-    if (hasData) {
+    const { hasData, data } = handleResponse(nextPage);
+    const validRents = pickValidRents(data);
+    if (hasData && validRents.length > 0) {
       dispatch({
         type: 'data',
-        data: [...state.data, ...rentInfos]
+        data: [...state.data, ...validRents]
       });
 
       dispatch({
