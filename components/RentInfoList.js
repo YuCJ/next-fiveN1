@@ -12,16 +12,33 @@ const CardText = styled.p`
   line-height: 1.4;
 `;
 
+function getId(url = '') {
+  return url.match(/rent-detail-(\d+).html/)[1] || '';
+}
+
+function getPhotoUrl(id) {
+  if (typeof window === undefined) return '';
+  return window.matchMedia('(orientation: portrait)')
+    ? `https://m.591.com.tw/v2/rent/photo/${id}/0`
+    : '';
+}
+
+function Photos({ rentUrl }) {
+  const photoUrl = getPhotoUrl(getId(rentUrl));
+  return photoUrl ? (
+    <iframe height="480" src={photoUrl} referrerPolicy="no-referrer" sandbox />
+  ) : null;
+}
+
 const RentInfoList = ({ data }) => {
   const flattenData = [].concat(...data);
   const rentInfos = Object.entries(flattenData).map((rent, index) => (
     <div className="col-md-4" key={index}>
       <div className="card border-secondary mb-3">
         <div className="card-body">
-          <Title className="card-title" data-tip={rent[1].title}>
-            {rent[1].title}
-          </Title>
-          <CardText className="card-text" data-tip={rent[1].address}>
+          <Photos rentUrl={rent[1].url} />
+          <Title className="card-title">{rent[1].title}</Title>
+          <CardText className="card-text">
             <MapPin size={16} /> {rent[1].address}
           </CardText>
           <CardText className="card-text">
