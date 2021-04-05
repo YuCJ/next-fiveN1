@@ -12,6 +12,7 @@ import {
   handleResponse,
   validationSchema
 } from '../utils';
+import { pickValidRents } from '../utils/filter';
 import * as options from '../utils/options';
 
 const initialState = {
@@ -204,11 +205,11 @@ function Form() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onSubmit = async data => {
+  const onSubmit = async formValues => {
     writeStateToUrl(getValues());
     ctxDispatch({ type: 'data', data: [] });
     ctxDispatch({ type: 'status', status: { firstSubmit: true } });
-    const valueEntries = Object.entries(data);
+    const valueEntries = Object.entries(formValues);
 
     const queryParameters = valueEntries.reduce(
       (query, obj) => {
@@ -227,10 +228,10 @@ function Form() {
     const body = await fetch(url)
       .then(handleError)
       .then(response => response.json());
-    const { hasData, data: rentInfos } = handleResponse(body);
-
-    if (hasData) {
-      ctxDispatch({ type: 'data', data: [...ctxState.data, ...rentInfos] });
+    const { hasData, data } = handleResponse(body);
+    const validRents = pickValidRents(data);
+    if (hasData && validRents.length > 0) {
+      ctxDispatch({ type: 'data', data: [...ctxState.data, ...validRents] });
       ctxDispatch({
         type: 'status',
         status: { firstSubmit: false, more: true }
