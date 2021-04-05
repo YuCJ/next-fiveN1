@@ -31,7 +31,7 @@ function About() {
                   591
                 </a>{' '}
                 租屋網所有，如果對於網站有任何問題，歡迎來信到{' '}
-                <img src="/static/mail.svg" width="25" height="25" />{' '}
+                <img src="./static/mail.svg" width="25" height="25" />{' '}
                 <a href="mailto:bivinity.pengzjie@gmail.com">
                   bivinity.pengzjie@gmail.com
                 </a>
