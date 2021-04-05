@@ -1,6 +1,8 @@
 const NEXT_PUBLIC_API_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 module.exports = {
   target: 'serverless',
   env: {
@@ -11,5 +13,6 @@ module.exports = {
       '/': { page: '/' },
       '/about': { page: '/about' }
     };
-  }
+  },
+  assetPrefix: isDev ? '' : '/next-fiveN1/'
 };

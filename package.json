@@ -2,12 +2,12 @@
   "name": "next-fiven1",
   "version": "0.0.0",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
+    "dev": "NODE_ENV=development next",
+    "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint . --ext=js",
     "lint:fix": "eslint . --ext=js --fix",
-    "static": "next build && next export"
+    "static": "NODE_ENV=production next build && next export"
   },
   "author": "Peng Jie <im@jiepeng.me> (https://github.com/neighborhood999)",
   "lint-staged": {
