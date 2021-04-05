@@ -4,16 +4,12 @@ import styled from 'styled-components';
 import { Box, DollarSign, Grid, MapPin, Menu } from 'react-feather';
 
 const Title = styled.h5`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1.4;
 `;
 
 const CardText = styled.p`
   margin-top: 15px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1.4;
 `;
 
 const RentInfoList = ({ data }) => {
@@ -21,11 +17,6 @@ const RentInfoList = ({ data }) => {
   const rentInfos = Object.entries(flattenData).map((rent, index) => (
     <div className="col-md-4" key={index}>
       <div className="card border-secondary mb-3">
-        <img
-          className="card-img-top"
-          alt="preview-photo"
-          src={rent[1].preview}
-        />
         <div className="card-body">
           <Title className="card-title" data-tip={rent[1].title}>
             {rent[1].title}
@@ -43,6 +34,10 @@ const RentInfoList = ({ data }) => {
           <CardText className="card-text">
             <Box size={16} /> 類型：
             {rent[1].optionType}
+          </CardText>
+          <CardText className="card-text">
+            <Box size={16} /> 房數：
+            {rent[1].rentType}
           </CardText>
           <CardText className="card-text">
             <Grid size={16} /> 坪數：
