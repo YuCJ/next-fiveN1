@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint . --ext=js",
     "lint:fix": "eslint . --ext=js --fix",
-    "static": "NODE_ENV=production next build && next export"
+    "static": "NODE_ENV=production next build && next export -o dist/"
   },
   "author": "Peng Jie <im@jiepeng.me> (https://github.com/neighborhood999)",
   "lint-staged": {
