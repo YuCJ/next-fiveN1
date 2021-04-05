@@ -14,5 +14,5 @@ module.exports = {
       '/about': { page: '/about' }
     };
   },
-  assetPrefix: isDev ? '' : '/next-fiveN1/dist/'
+  assetPrefix: isDev ? '' : '/next-fiveN1/dist'
 };
