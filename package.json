@@ -2,14 +2,14 @@
   "name": "next-fiven1",
   "version": "0.0.0",
   "scripts": {
-    "clean": "rm -rf .next/static dist",
     "dev": "NODE_ENV=development next",
-    "build": "NODE_ENV=production next build",
+    "build": "rm -rf .next/static && NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint . --ext=js",
     "lint:fix": "eslint . --ext=js --fix",
-    "static": "yarn clean && NODE_ENV=production next build && next export -o dist/",
-    "release": "git checkout public && git merge master --no-ff --no-edit && yarn static && git add dist && git commit -m \"chore: update static\""
+    "export": "rm -rf dist && next export -o dist/",
+    "deploy": "touch dist/.nojekyll && git add dist/ && git commit -m \"chore: update static\"",
+    "release": "git checkout public && git merge master --no-ff --no-edit && yarn build && yarn export && yarn deploy && git push origin"
   },
   "author": "Peng Jie <im@jiepeng.me> (https://github.com/neighborhood999)",
   "lint-staged": {
