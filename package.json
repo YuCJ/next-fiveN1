@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint . --ext=js",
     "lint:fix": "eslint . --ext=js --fix",
-    "export": "rm -rf dist && next export -o dist/ && touch .nojekyll && git add dist/ && git commit -m \"chore: update static\"",
+    "export": "rm -rf dist && next export -o dist/ && git add dist/ && git commit -m \"chore: update static\"",
     "deploy": "git push origin",
     "release": "git checkout gh-pages && git merge master --no-ff --no-edit && yarn build && yarn export && yarn deploy"
   },
