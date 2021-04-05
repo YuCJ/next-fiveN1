@@ -2,7 +2,7 @@
   "name": "next-fiven1",
   "version": "0.0.0",
   "scripts": {
-    "clean": "rm -rf .next dist",
+    "clean": "rm -rf .next/static dist",
     "dev": "NODE_ENV=development next",
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
