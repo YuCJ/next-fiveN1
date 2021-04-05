@@ -1,6 +1,7 @@
 import CreatableSelect from 'react-select/creatable';
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import Select from 'react-select';
+import localforage from 'localforage';
 import swal from 'sweetalert';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -12,6 +13,8 @@ import {
   validationSchema
 } from '../utils';
 import * as options from '../utils/options';
+
+const cacheKey = 'form_state_cache';
 
 const initialState = {
   urlJump: { label: '台北市', value: 1 },
@@ -138,6 +141,12 @@ function reducer(state, action) {
       };
     }
 
+    case 'overwrite': {
+      return {
+        ...action.payload
+      };
+    }
+
     default:
       return initialState;
   }
@@ -162,18 +171,39 @@ const customStyles = {
   })
 };
 
+function writeCache(state) {
+  localforage.setItem(cacheKey, state);
+}
+
+function readCache(cb) {
+  localforage.getItem(cacheKey, cb);
+}
+
 function Form() {
   const { ctxState, ctxDispatch } = useContext(RentInfoContext);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { handleSubmit, setValue, control } = useForm({
+  const { handleSubmit, setValue, control, reset, getValues } = useForm({
     defaultValues: initialState,
     validationSchema
   });
 
+  useEffect(() => {
+    readCache(cachedState => {
+      if (cachedState) {
+        try {
+          reset(cachedState);
+        } catch (err) {
+          console.error(err); // eslint-disable-line no-console
+          reset();
+        }
+      }
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const onSubmit = async data => {
+    writeCache(getValues());
     ctxDispatch({ type: 'data', data: [] });
     ctxDispatch({ type: 'status', status: { firstSubmit: true } });
-
     const valueEntries = Object.entries(data);
 
     const queryParameters = valueEntries.reduce(
