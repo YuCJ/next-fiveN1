@@ -1,7 +1,7 @@
 import CreatableSelect from 'react-select/creatable';
 import React, { useContext, useEffect, useReducer } from 'react';
 import Select from 'react-select';
-import localforage from 'localforage';
+import qs from 'qs';
 import swal from 'sweetalert';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -13,8 +13,6 @@ import {
   validationSchema
 } from '../utils';
 import * as options from '../utils/options';
-
-const cacheKey = 'form_state_cache';
 
 const initialState = {
   urlJump: { label: '台北市', value: 1 },
@@ -171,12 +169,18 @@ const customStyles = {
   })
 };
 
-function writeCache(state) {
-  localforage.setItem(cacheKey, state);
+function writeStateToUrl(state) {
+  const search = qs.stringify(state, { addQueryPrefix: true });
+  const url = new URL(window.location);
+  url.search = search;
+  window.history.pushState({}, '', url);
 }
 
-function readCache(cb) {
-  localforage.getItem(cacheKey, cb);
+function readStateFromUrl(cb) {
+  if (typeof window !== 'undefined') {
+    const query = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+    cb(query);
+  }
 }
 
 function Form() {
@@ -188,7 +192,7 @@ function Form() {
   });
 
   useEffect(() => {
-    readCache(cachedState => {
+    readStateFromUrl(cachedState => {
       if (cachedState) {
         try {
           reset(cachedState);
@@ -201,7 +205,7 @@ function Form() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async data => {
-    writeCache(getValues());
+    writeStateToUrl(getValues());
     ctxDispatch({ type: 'data', data: [] });
     ctxDispatch({ type: 'status', status: { firstSubmit: true } });
     const valueEntries = Object.entries(data);
