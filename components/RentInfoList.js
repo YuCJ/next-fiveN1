@@ -17,8 +17,8 @@ function getId(url = '') {
 }
 
 function getPhotoUrl(id) {
-  if (typeof window === undefined) return '';
-  return window.matchMedia('(orientation: portrait)')
+  if (typeof window === 'undefined') return '';
+  return window.matchMedia('(orientation: portrait)').matches
     ? `https://m.591.com.tw/v2/rent/photo/${id}/0`
     : '';
 }
@@ -26,7 +26,13 @@ function getPhotoUrl(id) {
 function Photos({ rentUrl }) {
   const photoUrl = getPhotoUrl(getId(rentUrl));
   return photoUrl ? (
-    <iframe height="480" src={photoUrl} referrerPolicy="no-referrer" sandbox />
+    <iframe
+      style={{ width: '100%' }}
+      height="480"
+      src={photoUrl}
+      referrerPolicy="no-referrer"
+      sandbox
+    />
   ) : null;
 }
 
