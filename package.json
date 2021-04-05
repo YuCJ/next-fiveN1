@@ -8,7 +8,7 @@
     "lint": "eslint . --ext=js",
     "lint:fix": "eslint . --ext=js --fix",
     "static": "NODE_ENV=production next build && next export -o dist/",
-    "release": "git checkout static && git merge master --no-ff && yarn static"
+    "release": "git checkout static && git merge master --no-ff --no-edit && yarn static && git add dist && git commit -m \"chore: update static\""
   },
   "author": "Peng Jie <im@jiepeng.me> (https://github.com/neighborhood999)",
   "lint-staged": {
