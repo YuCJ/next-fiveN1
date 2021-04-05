@@ -13,7 +13,10 @@ export default class extends Document {
   render() {
     return (
       <html>
-        <Head />
+        <Head>
+          <meta name="robots" content="noindex" />
+          <meta name="googlebot" content="noindex" />
+        </Head>
         <body>
           <Main />
           <NextScript />
