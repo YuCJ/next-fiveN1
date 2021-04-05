@@ -2,7 +2,7 @@ import swal from 'sweetalert';
 import * as yup from 'yup';
 
 export const appendParameters = parameters => {
-  const url = new URL(process.env.API_URL);
+  const url = new URL(process.env.NEXT_PUBLIC_API_URL);
 
   Object.keys(parameters).forEach(key =>
     url.searchParams.append(key, parameters[key])

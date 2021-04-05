@@ -1,8 +1,9 @@
-const API_URL = process.env.API_URL || 'http://localhost:8000';
+const NEXT_PUBLIC_API_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 module.exports = {
   target: 'serverless',
   env: {
-    API_URL,
+    NEXT_PUBLIC_API_URL
   }
 };
